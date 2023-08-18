@@ -1,0 +1,51 @@
+name: "Explorer CI CD"
+
+on:
+    pull_request:
+        types: [opened, synchronize, closed]
+    push:
+        branches:
+            - 'master'
+jobs:
+    build-explorer:
+        name: "Build and push explorer image"
+        runs-on: ubuntu-latest
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: docker/setup-qemu-action@v2
+            -   uses: docker/setup-buildx-action@v2
+            -   uses: actions/cache@v3
+                with:
+                    path: /tmp/.buildx-cache
+                    key: ${{ github.job }}-${{ runner.os }}-buildx
+                    restore-keys: |
+                        ${{ github.job }}-${{ runner.os }}-buildx
+            -   uses: docker/login-action@v2
+                with:
+                    username: ${{ secrets.DOCKER_USERNAME }}
+                    password: ${{ secrets.DOCKER_PUSH_TOKEN }}
+            # Configure tag name
+            -   name: Sets env vars for pull request
+                if: github.event_name == 'pull_request'
+                run: |
+                    echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+            -   name: Sets env vars for master
+                if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+                run: |
+                    echo "DOCKER_IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest" >> $GITHUB_ENV
+            # Build and push image
+            -   name: Build and push
+                uses: docker/build-push-action@v4
+                with:
+                    context: packages/explorer
+                    file: packages/explorer/docker/Dockerfile
+                    push: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/master' }}
+                    tags: ${{ env.DOCKER_IMAGE_NAME }}
+                    cache-from: type=local,src=/tmp/.buildx-cache
+                    cache-to: type=local,dest=/tmp/.buildx-cache-new
+            -   name: Move cache
+                if: always()
+                run: |
+                    rm -rf /tmp/.buildx-cache
+                    mv /tmp/.buildx-cache-new /tmp/.buildx-cache
