@@ -19,6 +19,13 @@ config :block_scout_web, BlockScoutWeb.Endpoint,
       "--watch",
       cd: Path.expand("../assets", __DIR__)
     ]
+  ],
+  http: [port: 4000],
+  https: [
+    port: 4001,
+    cipher_suite: :strong,
+    certfile: "priv/cert/selfsigned.pem",
+    keyfile: "priv/cert/selfsigned_key.pem"
   ]
 
 # ## SSL Support
@@ -36,6 +43,8 @@ config :block_scout_web, BlockScoutWeb.Endpoint,
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on
 # different ports.
+
+
 
 # Watch static and templates for browser reloading.
 config :block_scout_web, BlockScoutWeb.Endpoint,

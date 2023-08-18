@@ -66,6 +66,9 @@ config :block_scout_web, BlockScoutWeb.Chain,
   subnetwork: System.get_env("SUBNETWORK"),
   network_icon: System.get_env("NETWORK_ICON"),
   logo: System.get_env("LOGO"),
+  logo_footer: System.get_env("LOGO_FOOTER"),
+  peersyst_logo: System.get_env("PEERSYST_LOGO"),
+  peersyst_url: System.get_env("PEERSYST_URL"),
   logo_text: System.get_env("LOGO_TEXT"),
   has_emission_funds: false,
   show_maintenance_alert: ConfigHelper.parse_bool_env_var("SHOW_MAINTENANCE_ALERT"),
@@ -73,7 +76,7 @@ config :block_scout_web, BlockScoutWeb.Chain,
   testnet_label_text: System.get_env("TESTNET_LABEL_TEXT", "Testnet")
 
 config :block_scout_web, :footer,
-  logo: System.get_env("FOOTER_LOGO"),
+  logo: System.get_env("LOGO_FOOTER"),
   chat_link: System.get_env("FOOTER_CHAT_LINK", "https://discord.gg/blockscout"),
   github_link: System.get_env("FOOTER_GITHUB_LINK", "https://github.com/blockscout/blockscout"),
   forum_link_enabled: ConfigHelper.parse_bool_env_var("FOOTER_FORUM_LINK_ENABLED"),
@@ -107,7 +110,7 @@ config :block_scout_web, :api_rate_limit,
 
 # Configures History
 price_chart_config =
-  if ConfigHelper.parse_bool_env_var("SHOW_PRICE_CHART") do
+  if System.get_env("SHOW_PRICE_CHART", "false") != "false" do
     %{market: [:price, :market_cap]}
   else
     %{}
