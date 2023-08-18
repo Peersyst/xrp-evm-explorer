@@ -3,43 +3,61 @@ $badge-success-background-color: rgba($badge-success-color, 0.1) !default;
 $badge-danger-color: #ed9966 !default;
 $badge-danger-background-color: rgba($badge-danger-color, 0.1) !default;
 $badge-neutral-color: $secondary !default;
-$badge-neutral-background-color: rgba($secondary, .1) !default;
+$badge-neutral-background-color: rgba($secondary, 0.1) !default;
 
 .badge {
-  color: $white;
+    color: $white;
+    border-radius: 12px;
 
-  &.tile-badge {
-    font-size: 10px;
-    font-weight: bold;
-    height: 20px;
-    line-height: 20px;
-    margin: 0;
-    padding: 0 11px;
-    width: auto;
-  }
+    &.tile-badge {
+        font-size: 10px;
+        font-weight: bold;
+        height: 20px;
+        line-height: 20px;
+        margin: 0;
+        padding: 0 11px;
+        width: auto;
+    }
 
-  &.api-badge {
-    font-size: 12px;
-    font-weight: 700;
-    height: 24px;
-    line-height: 26px;
-    margin: 0;
-    padding: 0 8px;
-    width: auto;
-  }
+    &.api-badge {
+        font-size: 12px;
+        font-weight: 700;
+        height: 24px;
+        line-height: 26px;
+        margin: 0;
+        padding: 0 8px;
+        width: auto;
+    }
 
-  &.badge-success {
-    background-color: $badge-success-background-color;
-    color: $badge-success-color;
-  }
+    &.badge-success {
+        background-color: $green-label-bg !important;
+        color: $green-label-color !important;
+    }
 
-  &.badge-danger {
-    background-color: $badge-danger-background-color;
-    color: $badge-danger-color;
-  }
+    &.badge-danger {
+        background-color: $orange-label-bg !important;
+        color: $orange-label-color !important;
+    }
 
-  &.badge-neutral {
-    background-color: $badge-neutral-background-color;
-    color: $badge-neutral-color;
-  }
+    &.badge-neutral {
+        background-color: $purple-label-bg !important;
+        color: $purple-label-color !important;
+    }
+}
+
+.dark-theme-applied .badge {
+    &.badge-success {
+        background-color: $green-label-bg-dark !important;
+        color: $green-label-color-dark !important;
+    }
+
+    &.badge-danger {
+        background-color: $orange-label-bg-dark !important;
+        color: $orange-label-color-dark !important;
+    }
+
+    &.badge-neutral {
+        background-color: $purple-label-bg-dark !important;
+        color: $purple-label-color-dark !important;
+    }
 }

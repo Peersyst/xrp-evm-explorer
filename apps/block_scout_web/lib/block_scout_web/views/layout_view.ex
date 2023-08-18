@@ -43,6 +43,14 @@ defmodule BlockScoutWeb.LayoutView do
     Keyword.get(application_config(), :footer)[:logo] || Keyword.get(application_config(), :logo)
   end
 
+    def peersyst_logo do
+    Keyword.get(application_config(), :peersyst_logo) || Keyword.get(application_config(), :logo)
+  end
+
+  def peersyst_url do
+    Keyword.get(application_config(), :peersyst_url) || Keyword.get(application_config(), :logo)
+  end
+
   def logo_text do
     Keyword.get(application_config(), :logo_text) || nil
   end

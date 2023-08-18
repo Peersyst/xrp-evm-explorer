@@ -2,12 +2,12 @@
 
 /* Phoenix flash messages */
 .alert:empty {
-  display: none;
+    display: none;
 }
 
 a.disabled {
-  pointer-events: none;
-  opacity: 0.65;
+    pointer-events: none;
+    opacity: 0.65;
 }
 
 /* This file is for your main application css. */
@@ -17,7 +17,7 @@ a.disabled {
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
-@import "theme/variables";
+@import "./theme/variables";
 
 @import "~bootstrap/scss/close";
 @import "~bootstrap/scss/root";
